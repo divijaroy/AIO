@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile Page</title>
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+<style>
+  /* style.css */
+body{
+  background-color: #008d7d;
+}
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="file"],
+input[type="text"],
+input[type="email"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #008d7d;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #008d7d;
+}
+
+button:focus {
+  outline: none;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Update Profile</h1>
+    <form action="/update-profile" method="post">
+      <label for="picture">Picture:</label>
+      <input type="file" id="picture" name="picture"><br>
+  
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"><br>
+  
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email"><br>
+  
+      <label for="id">ID:</label>
+      <input type="text" id="id" name="id"><br>
+  
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age"><br>
+  
+      <label for="address">Address:</label>
+      <textarea id="address" name="address"></textarea><br>
+  
+      <button type="submit">Update Profile</button>
+    </form>    
+  
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

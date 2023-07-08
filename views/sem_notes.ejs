@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="css/main.css" rel="stylesheet"/> -->
+    <style>
+      .search-container {
+  display: flex;
+  justify-content: center;
+}
+/* button[type="submit"] {
+  align-items: center;
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+   
+  border-width: 2px;
+  
+  border-color: #0c0c0c;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button[type="submit"]:hover {
+  background-color: #008d7d;
+  color: black;
+} */
+
+.search-container form {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.search-container input[type="text"] {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  margin-right: 10px;
+}
+
+.search-container button[type="submit"] {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #6c757d;
+  color: #fff;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0c0c0c;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="file"]:hover {
+  background-color: #edeeee;
+}
+
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+    
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+    
+      form {
+        margin-bottom: 20px;
+      }
+    
+      input[type="file"] {
+        margin-right: 10px;
+      }
+    
+      h1 {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+      }
+    
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+      }
+    
+      .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 0 15px;
+        margin-bottom: 30px;
+      }
+    
+      .col-md-4 {
+        flex: 0 0 33.3333%;
+        max-width: 33.3333%;
+        padding: 0 15px;
+        margin-bottom: 30px;
+      }
+    
+      .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+        padding: 0 15px;
+        margin-bottom: 30px;
+      }
+    
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s;
+      }
+    
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+    
+      .card-img-top {
+        height: 200px;
+        object-fit: cover;
+      }
+    
+      .card-body {
+        text-align: center;
+      }
+    
+      .card-title {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    
+      .btn-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #008d7d;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+    
+      .btn-primary:hover {
+        background-color: #008d7d;
+      }
+    </style>
+    
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+      
+      <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" />
+        <button type="submit">Upload</button>
+      </form>
+        <div class="search-container mb-4">
+            <form action="/notes" method="get">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search files" name="q">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+              </div>
+            </form>
+          </div>
+          
+        <h1>Uploaded files</h1>
+      
+        <div class="row">
+          <% if (files && files.length) { %>
+            <% files.forEach(function(file) { %>
+              <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card h-100">
+                  <% if (file.mimetype && file.mimetype.startsWith("image/")) { %>
+                    <% generateThumbnail(path.join(uploadsDir, file.filename)).then(function(thumbnailFilename) { %>
+                      <img src="/<%= thumbnailFilename %>" class="card-img-top" alt="<%= file.originalname %>">
+                    <% }); %>
+                  <% } else { %>
+                    <div class="text-center pt-3">
+                      <i class="fas fa-file fa-5x"></i>
+                    </div>
+                  <% } %>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= file.originalname %></h5>
+                    <a href="/download/<%= file.filename %>" class="btn btn-primary">Download</a>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <p>No files uploaded yet.</p>
+          <% } %>
+        </div>
+      </div>
+      
+</body>
+</html>
+
+
+
